@@ -47,7 +47,7 @@ echo $sched_rt_runtime_us > /proc/sys/kernel/sched_rt_runtime_us
 
 if [ -d /proc/sys/walt ]; then
 	# configure maximum frequency when CPUs are partially halted
-	echo 729600 > /proc/sys/walt/sched_max_freq_partial_halt
+	echo 460800 > /proc/sys/walt/sched_max_freq_partial_halt
 
 	# Core Control Paramters for Silvers
 	echo 0xFF > /sys/devices/system/cpu/cpu0/core_ctl/nrrun_cpu_mask
@@ -56,11 +56,11 @@ if [ -d /proc/sys/walt ]; then
 	echo 0x00 > /sys/devices/system/cpu/cpu0/core_ctl/assist_cpu_misfit_mask
 
 	# Core control parameters for gold
-	echo 2 > /sys/devices/system/cpu/cpu2/core_ctl/min_cpus
-	echo 60 > /sys/devices/system/cpu/cpu2/core_ctl/busy_up_thres
-	echo 30 > /sys/devices/system/cpu/cpu2/core_ctl/busy_down_thres
+	echo 1 > /sys/devices/system/cpu/cpu2/core_ctl/min_cpus
+	echo 80 > /sys/devices/system/cpu/cpu2/core_ctl/busy_up_thres
+	echo 15 > /sys/devices/system/cpu/cpu2/core_ctl/busy_down_thres
 	echo 100 > /sys/devices/system/cpu/cpu2/core_ctl/offline_delay_ms
-	echo 4 > /sys/devices/system/cpu/cpu2/core_ctl/task_thres
+	echo 8 > /sys/devices/system/cpu/cpu2/core_ctl/task_thres
 	echo 0 0 0 > /sys/devices/system/cpu/cpu2/core_ctl/not_preferred
 	echo 0xFC > /sys/devices/system/cpu/cpu2/core_ctl/nrrun_cpu_mask
 	echo 0x63 > /sys/devices/system/cpu/cpu2/core_ctl/nrrun_cpu_misfit_mask
@@ -69,11 +69,11 @@ if [ -d /proc/sys/walt ]; then
 
 	# Core control parameters for titaniums
 	echo 0 > /sys/devices/system/cpu/cpu5/core_ctl/min_cpus
-	echo 1 > /sys/devices/system/cpu/cpu5/core_ctl/min_partial_cpus
-	echo 60 > /sys/devices/system/cpu/cpu5/core_ctl/busy_up_thres
-	echo 30 > /sys/devices/system/cpu/cpu5/core_ctl/busy_down_thres
+	echo 0 > /sys/devices/system/cpu/cpu5/core_ctl/min_partial_cpus
+	echo 80 > /sys/devices/system/cpu/cpu5/core_ctl/busy_up_thres
+	echo 15 > /sys/devices/system/cpu/cpu5/core_ctl/busy_down_thres
 	echo 100 > /sys/devices/system/cpu/cpu5/core_ctl/offline_delay_ms
-	echo 3 > /sys/devices/system/cpu/cpu5/core_ctl/task_thres
+	echo 5 > /sys/devices/system/cpu/cpu5/core_ctl/task_thres
 	echo 1 1 > /sys/devices/system/cpu/cpu5/core_ctl/not_preferred
 	echo 0xE0 > /sys/devices/system/cpu/cpu5/core_ctl/nrrun_cpu_mask
 	echo 0x00 > /sys/devices/system/cpu/cpu5/core_ctl/nrrun_cpu_misfit_mask
@@ -82,10 +82,10 @@ if [ -d /proc/sys/walt ]; then
 
 	# Core control parameters for gold+
 	echo 0 > /sys/devices/system/cpu/cpu7/core_ctl/min_cpus
-	echo 60 > /sys/devices/system/cpu/cpu7/core_ctl/busy_up_thres
-	echo 30 > /sys/devices/system/cpu/cpu7/core_ctl/busy_down_thres
+	echo 80 > /sys/devices/system/cpu/cpu7/core_ctl/busy_up_thres
+	echo 15 > /sys/devices/system/cpu/cpu7/core_ctl/busy_down_thres
 	echo 100 > /sys/devices/system/cpu/cpu7/core_ctl/offline_delay_ms
-	echo 2 > /sys/devices/system/cpu/cpu7/core_ctl/task_thres
+	echo 4 > /sys/devices/system/cpu/cpu7/core_ctl/task_thres
 	echo 1 > /sys/devices/system/cpu/cpu7/core_ctl/not_preferred
 	echo 0x80 > /sys/devices/system/cpu/cpu7/core_ctl/nrrun_cpu_mask
 	echo 0x7C > /sys/devices/system/cpu/cpu7/core_ctl/nrrun_cpu_misfit_mask
@@ -102,10 +102,10 @@ if [ -d /proc/sys/walt ]; then
 	echo 0x60 > /proc/sys/walt/sched_sbt_pause_cpus
 
 	# Setting b.L scheduler parameters
-	echo 95 95 95 > /proc/sys/walt/sched_upmigrate
-	echo 85 85 85 > /proc/sys/walt/sched_downmigrate
-	echo 80 > /proc/sys/walt/sched_group_downmigrate
-	echo 90 > /proc/sys/walt/sched_group_upmigrate
+	echo 97 97 97 > /proc/sys/walt/sched_upmigrate
+	echo 80 80 80 > /proc/sys/walt/sched_downmigrate
+	echo 70 > /proc/sys/walt/sched_group_downmigrate
+	echo 95 > /proc/sys/walt/sched_group_upmigrate
 	echo 1 > /proc/sys/walt/sched_walt_rotate_big_tasks
 	echo 400000000 > /proc/sys/walt/sched_coloc_downmigrate_ns
 	echo 16000000 16000000 16000000 16000000 16000000 16000000 16000000 5000000 > /proc/sys/walt/sched_coloc_busy_hyst_cpu_ns
@@ -116,10 +116,10 @@ if [ -d /proc/sys/walt ]; then
 	echo 1 1 1 1 1 1 1 15 > /proc/sys/walt/sched_util_busy_hyst_cpu_util
 	echo 45 > /proc/sys/walt/sched_cluster_util_thres_pct
 	echo 40 > /proc/sys/walt/sched_idle_enough
-	echo 6 > /proc/sys/walt/sched_ed_boost
+	echo 2 > /proc/sys/walt/sched_ed_boost
 
 	#Set early upmigrate tunables
-	freq_to_migrate=1248000
+	freq_to_migrate=1401600
 	silver_fmax=`cat /sys/devices/system/cpu/cpufreq/policy0/scaling_max_freq`
 	silver_early_upmigrate=`expr 1024 \* $silver_fmax / $freq_to_migrate`
 	silver_early_downmigrate=`expr \( 1024 \* $silver_fmax \) / \( \( \( 10 \* $freq_to_migrate \) - $silver_fmax \) \/ 10 \)`
@@ -141,54 +141,43 @@ if [ -d /proc/sys/walt ]; then
 
 	# configure maximum frequency of silver cluster when load is not detected and ensure that
 	# other clusters' fmax remains uncapped by setting the frequency to S32_MAX
-	echo 1132800 1708800 1708800 2169600 > /proc/sys/walt/sched_fmax_cap
+	echo 787200 1248000 1248000 1497600 > /proc/sys/walt/sched_fmax_cap
 
 	# Turn off scheduler boost at the end
 	echo 0 > /proc/sys/walt/sched_boost
 
 	# configure input boost settings
-	if [ $rev == "1.0" ] || [ $rev == "1.1" ]; then
-		echo 672000 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
-	else
-		echo 556800 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
-	fi
-	echo 25 > /proc/sys/walt/input_boost/input_boost_ms
+	echo 364800 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
+	echo 8 > /proc/sys/walt/input_boost/input_boost_ms
 
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy2/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy5/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy7/scaling_governor
 
-	echo 25000 > /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us
-	echo 6000 > /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us
-	echo 30000 > /sys/devices/system/cpu/cpufreq/policy2/walt/down_rate_limit_us
-	echo 7500 > /sys/devices/system/cpu/cpufreq/policy2/walt/up_rate_limit_us
-	echo 30000 > /sys/devices/system/cpu/cpufreq/policy5/walt/down_rate_limit_us
-	echo 7500 > /sys/devices/system/cpu/cpufreq/policy5/walt/up_rate_limit_us
-	echo 35000 > /sys/devices/system/cpu/cpufreq/policy7/walt/down_rate_limit_us
-	echo 10000 > /sys/devices/system/cpu/cpufreq/policy7/walt/up_rate_limit_us
+	echo 70000 > /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us
+	echo 20000 > /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us
+	echo 80000 > /sys/devices/system/cpu/cpufreq/policy2/walt/down_rate_limit_us
+	echo 24000 > /sys/devices/system/cpu/cpufreq/policy2/walt/up_rate_limit_us
+	echo 80000 > /sys/devices/system/cpu/cpufreq/policy5/walt/down_rate_limit_us
+	echo 24000 > /sys/devices/system/cpu/cpufreq/policy5/walt/up_rate_limit_us
+	echo 100000 > /sys/devices/system/cpu/cpufreq/policy7/walt/down_rate_limit_us
+	echo 30000 > /sys/devices/system/cpu/cpufreq/policy7/walt/up_rate_limit_us
 
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy0/walt/pl
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy2/walt/pl
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy5/walt/pl
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy7/walt/pl
 
-	echo 556800 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
-	echo 614400 > /sys/devices/system/cpu/cpufreq/policy2/walt/rtg_boost_freq
-	echo 614400 > /sys/devices/system/cpu/cpufreq/policy5/walt/rtg_boost_freq
-	echo 672000 > /sys/devices/system/cpu/cpufreq/policy7/walt/rtg_boost_freq
+	echo 364800 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
+	echo 499200 > /sys/devices/system/cpu/cpufreq/policy2/walt/rtg_boost_freq
+	echo 499200 > /sys/devices/system/cpu/cpufreq/policy5/walt/rtg_boost_freq
+	echo 480000 > /sys/devices/system/cpu/cpufreq/policy7/walt/rtg_boost_freq
 
-	if [ $rev == "1.0" ] || [ $rev == "1.1" ]; then
-		echo 787200 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-		echo 844800 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
-		echo 844800 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
-		echo 844800 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
-	else
-		echo 787200 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-		echo 844800 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
-		echo 844800 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
-		echo 844800 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
-	fi
+	echo 556800 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
+	echo 614400 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
+	echo 614400 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
+	echo 614400 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
 else
 	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy2/scaling_governor
@@ -237,7 +226,7 @@ do
 	echo 0 > $ubwcpbw/guard_band_mbps
 	echo 250 > $ubwcpbw/up_scale
 	echo 1600 > $ubwcpbw/idle_mbps
-	echo 640000 > $ubwcpbw/max_freq
+	echo 480000 > $ubwcpbw/max_freq
 	echo 40 > $ubwcpbw/window_ms
 done
 
@@ -253,7 +242,7 @@ do
 	echo 0 > $llccbw/guard_band_mbps
 	echo 250 > $llccbw/up_scale
 	echo 1600 > $llccbw/idle_mbps
-	echo 710000 > $llccbw/max_freq
+	echo 520000 > $llccbw/max_freq
 	echo 40 > $llccbw/window_ms
 done
 
@@ -269,40 +258,40 @@ do
 	echo 0 > $ddrbw/guard_band_mbps
 	echo 250 > $ddrbw/up_scale
 	echo 1600 > $ddrbw/idle_mbps
-	echo 2400000 > $ddrbw/max_freq
+	echo 1600000 > $ddrbw/max_freq
 	echo 40 > $ddrbw/window_ms
 done
 
 for latfloor in $bus_dcvs/*/*latfloor
 do
-	echo 25000 > $latfloor/ipm_ceil
+	echo 18000 > $latfloor/ipm_ceil
 done
 
 for l3gold in $bus_dcvs/L3/*gold
 do
-	echo 4000 > $l3gold/ipm_ceil
+	echo 3000 > $l3gold/ipm_ceil
 done
 
 for l3prime in $bus_dcvs/L3/*prime
 do
-	echo 20000 > $l3prime/ipm_ceil
+	echo 12000 > $l3prime/ipm_ceil
 done
 
 for qosgold in $bus_dcvs/DDRQOS/*gold
 do
-	echo 50 > $qosgold/ipm_ceil
+	echo 35 > $qosgold/ipm_ceil
 done
 
 for qosprime in $bus_dcvs/DDRQOS/*prime
 do
-	echo 100 > $qosprime/ipm_ceil
+	echo 70 > $qosprime/ipm_ceil
 done
 
 for ddrprime in $bus_dcvs/DDR/*prime
 do
-	echo 25 > $ddrprime/freq_scale_pct
-	echo 1500 > $ddrprime/freq_scale_floor_mhz
-	echo 2726 > $ddrprime/freq_scale_ceil_mhz
+	echo 20 > $ddrprime/freq_scale_pct
+	echo 1200 > $ddrprime/freq_scale_floor_mhz
+	echo 2000 > $ddrprime/freq_scale_ceil_mhz
 done
 
 echo s2idle > /sys/power/mem_sleep

@@ -586,6 +586,18 @@ function configure_zram_parameters() {
     MemTotal=${MemTotalStr:16:8}
 
     low_ram=`getprop ro.config.low_ram`
+    swap_enable=`getprop ro.vendor.qti.config.swap`
+
+    # Respect product-level swap disable and keep zram fully off.
+    if [ "$swap_enable" != "true" ]; then
+        if [ -e /dev/block/zram0 ]; then
+            swapoff /dev/block/zram0 2>/dev/null
+        fi
+        if [ -f /sys/block/zram0/reset ]; then
+            echo 1 > /sys/block/zram0/reset
+        fi
+        return
+    fi
 
     # Zram disk - 75% for Go devices.
     # For 512MB Go device, size = 384MB, set same for Non-Go.
@@ -637,21 +649,12 @@ function configure_read_ahead_kb_values() {
 
     dmpts=$(ls /sys/block/*/queue/read_ahead_kb | grep -e dm -e mmc)
 
-    # Set 128 for <= 3GB &
-    # set 512 for >= 4GB targets.
-    if [ $MemTotal -le 3145728 ]; then
-        echo 128 > /sys/block/mmcblk0/bdi/read_ahead_kb
-        echo 128 > /sys/block/mmcblk0rpmb/bdi/read_ahead_kb
-        for dm in $dmpts; do
-            echo 128 > $dm
-        done
-    else
-        echo 512 > /sys/block/mmcblk0/bdi/read_ahead_kb
-        echo 512 > /sys/block/mmcblk0rpmb/bdi/read_ahead_kb
-        for dm in $dmpts; do
-            echo 512 > $dm
-        done
-    fi
+    # Keep read-ahead low for battery-first behavior on all RAM sizes.
+    echo 128 > /sys/block/mmcblk0/bdi/read_ahead_kb
+    echo 128 > /sys/block/mmcblk0rpmb/bdi/read_ahead_kb
+    for dm in $dmpts; do
+        echo 128 > $dm
+    done
 }
 
 function disable_core_ctl() {
@@ -712,7 +715,7 @@ if [ "$ProductName" == "msmnile" ] || [ "$ProductName" == "kona" ] || [ "$Produc
       configure_zram_parameters
       configure_read_ahead_kb_values
       echo 0 > /proc/sys/vm/page-cluster
-      echo 100 > /proc/sys/vm/swappiness
+      echo 10 > /proc/sys/vm/swappiness
 else
     arch_type=`uname -m`
 
@@ -815,9 +818,9 @@ else
     fi
 
     # Set allocstall_threshold to 0 for all targets.
-    # Set swappiness to 100 for all targets
+    # Set low swappiness for all targets
     echo 0 > /sys/module/vmpressure/parameters/allocstall_threshold
-    echo 100 > /proc/sys/vm/swappiness
+    echo 10 > /proc/sys/vm/swappiness
 
     # Disable wsf for all targets beacause we are using efk.
     # wsf Range : 1..1000 So set to bare minimum value 1.
@@ -4264,7 +4267,7 @@ case "$target" in
 
             # Turn on sleep modes.
             echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
-            echo 100 > /proc/sys/vm/swappiness
+            echo 10 > /proc/sys/vm/swappiness
             ;;
         esac
     ;;
@@ -4820,7 +4823,7 @@ case "$target" in
 	echo N > /sys/module/lpm_levels/L3/l3-dyn-ret/idle_enabled
         # Turn on sleep modes.
         echo 0 > /sys/module/lpm_levels/parameters/sleep_disabled
-	echo 100 > /proc/sys/vm/swappiness
+	echo 10 > /proc/sys/vm/swappiness
 	echo 120 > /proc/sys/vm/watermark_scale_factor
     ;;
 esac
@@ -5689,7 +5692,7 @@ case "$target" in
     ;;
     "msm8974")
         start mpdecision
-        echo 512 > /sys/block/mmcblk0/bdi/read_ahead_kb
+        echo 128 > /sys/block/mmcblk0/bdi/read_ahead_kb
     ;;
     "msm8909" | "msm8916" | "msm8937" | "msm8952" | "msm8953" | "msm8994" | "msm8992" | "msm8996" | "msm8998" | "sdm660" | "apq8098_latv" | "sdm845" | "sdm710" | "msmnile" | "msmsteppe" | "sm6150" | "kona" | "lito" | "trinket" | "atoll" | "bengal" | "sdmshrike")
         setprop vendor.post_boot.parsed 1
@@ -5697,15 +5700,15 @@ case "$target" in
     "apq8084")
         rm /data/system/perfd/default_values
         start mpdecision
-        echo 512 > /sys/block/mmcblk0/bdi/read_ahead_kb
-        echo 512 > /sys/block/sda/bdi/read_ahead_kb
-        echo 512 > /sys/block/sdb/bdi/read_ahead_kb
-        echo 512 > /sys/block/sdc/bdi/read_ahead_kb
-        echo 512 > /sys/block/sdd/bdi/read_ahead_kb
-        echo 512 > /sys/block/sde/bdi/read_ahead_kb
-        echo 512 > /sys/block/sdf/bdi/read_ahead_kb
-        echo 512 > /sys/block/sdg/bdi/read_ahead_kb
-        echo 512 > /sys/block/sdh/bdi/read_ahead_kb
+        echo 128 > /sys/block/mmcblk0/bdi/read_ahead_kb
+        echo 128 > /sys/block/sda/bdi/read_ahead_kb
+        echo 128 > /sys/block/sdb/bdi/read_ahead_kb
+        echo 128 > /sys/block/sdc/bdi/read_ahead_kb
+        echo 128 > /sys/block/sdd/bdi/read_ahead_kb
+        echo 128 > /sys/block/sde/bdi/read_ahead_kb
+        echo 128 > /sys/block/sdf/bdi/read_ahead_kb
+        echo 128 > /sys/block/sdg/bdi/read_ahead_kb
+        echo 128 > /sys/block/sdh/bdi/read_ahead_kb
     ;;
     "msm7627a")
         if [ -f /sys/devices/soc0/soc_id ]; then
@@ -5802,4 +5805,3 @@ setprop persist.vendor.mmi.misc_dev_path $real_path
 
 #cubeserver
 source /vendor/bin/init.zte.post_boot.sh
-

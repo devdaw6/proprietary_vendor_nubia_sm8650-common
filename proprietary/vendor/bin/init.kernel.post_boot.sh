@@ -35,6 +35,18 @@ function configure_zram_parameters() {
 	MemTotal=${MemTotalStr:16:8}
 
 	low_ram=`getprop ro.config.low_ram`
+	swap_enable=`getprop ro.vendor.qti.config.swap`
+
+	# Respect product-level swap disable and keep zram fully off.
+	if [ "$swap_enable" != "true" ]; then
+		if [ -e /dev/block/zram0 ]; then
+			swapoff /dev/block/zram0 2>/dev/null
+		fi
+		if [ -f /sys/block/zram0/reset ]; then
+			echo 1 > /sys/block/zram0/reset
+		fi
+		return
+	fi
 
 	superkiller_feature=$(getprop ro.vendor.feature.zte_feature_superkiller_enabled)
 	superkiller_prop=$(getprop persist.vendor.superkiller)
@@ -128,13 +140,8 @@ function configure_read_ahead_kb_values() {
 	# /sys/block/dm-0/queue/read_ahead_kb to /sys/block/dm-10/queue/read_ahead_kb
 	# /sys/block/sda/queue/read_ahead_kb to /sys/block/sdh/queue/read_ahead_kb
 
-	# Set 128 for <= 4GB &
-	# set 512 for >= 5GB targets.
-	if [ $MemTotal -le 4194304 ]; then
-		ra_kb=128
-	else
-		ra_kb=512
-	fi
+	# Keep read-ahead low for battery-first behavior on all RAM sizes.
+	ra_kb=128
 	if [ -f /sys/block/mmcblk0/bdi/read_ahead_kb ]; then
 		echo $ra_kb > /sys/block/mmcblk0/bdi/read_ahead_kb
 	fi
@@ -170,7 +177,7 @@ function configure_memory_parameters() {
 
 	configure_zram_parameters
 	configure_read_ahead_kb_values
-	echo 100 > /proc/sys/vm/swappiness
+	echo 10 > /proc/sys/vm/swappiness
 
 	# Disable periodic kcompactd wakeups. We do not use THP, so having many
 	# huge pages is not as necessary.
