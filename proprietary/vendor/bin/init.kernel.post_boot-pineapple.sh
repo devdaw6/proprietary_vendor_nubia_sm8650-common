@@ -148,25 +148,25 @@ if [ -d /proc/sys/walt ]; then
 
 	# configure input boost settings
 	if [ $rev == "1.0" ] || [ $rev == "1.1" ]; then
-		echo 1440000 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
-	else
 		echo 1248000 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
+	else
+		echo 1017600 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
 	fi
-	echo 100 > /proc/sys/walt/input_boost/input_boost_ms
+	echo 60 > /proc/sys/walt/input_boost/input_boost_ms
 
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy2/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy5/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy7/scaling_governor
 
-	echo 0 > /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us
-	echo 0 > /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us
-	echo 0 > /sys/devices/system/cpu/cpufreq/policy2/walt/down_rate_limit_us
-	echo 0 > /sys/devices/system/cpu/cpufreq/policy2/walt/up_rate_limit_us
-	echo 0 > /sys/devices/system/cpu/cpufreq/policy5/walt/down_rate_limit_us
-	echo 0 > /sys/devices/system/cpu/cpufreq/policy5/walt/up_rate_limit_us
-	echo 0 > /sys/devices/system/cpu/cpufreq/policy7/walt/down_rate_limit_us
-	echo 0 > /sys/devices/system/cpu/cpufreq/policy7/walt/up_rate_limit_us
+	echo 25000 > /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us
+	echo 2000 > /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us
+	echo 30000 > /sys/devices/system/cpu/cpufreq/policy2/walt/down_rate_limit_us
+	echo 2500 > /sys/devices/system/cpu/cpufreq/policy2/walt/up_rate_limit_us
+	echo 30000 > /sys/devices/system/cpu/cpufreq/policy5/walt/down_rate_limit_us
+	echo 2500 > /sys/devices/system/cpu/cpufreq/policy5/walt/up_rate_limit_us
+	echo 35000 > /sys/devices/system/cpu/cpufreq/policy7/walt/down_rate_limit_us
+	echo 3000 > /sys/devices/system/cpu/cpufreq/policy7/walt/up_rate_limit_us
 
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy0/walt/pl
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy2/walt/pl
@@ -179,15 +179,15 @@ if [ -d /proc/sys/walt ]; then
 	echo 902400 > /sys/devices/system/cpu/cpufreq/policy7/walt/rtg_boost_freq
 
 	if [ $rev == "1.0" ] || [ $rev == "1.1" ]; then
-		echo 1344000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-		echo 1612800 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
-		echo 1612800 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
-		echo 1555200 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
+		echo 1248000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
+		echo 1497600 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
+		echo 1497600 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
+		echo 1478400 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
 	else
-		echo 1344000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-		echo 1612800 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
-		echo 1612800 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
-		echo 1593600 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
+		echo 1248000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
+		echo 1497600 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
+		echo 1497600 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
+		echo 1478400 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
 	fi
 else
 	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
