@@ -94,7 +94,7 @@
 					<RSSIMacTimerThreshold units="dbm">-85</RSSIMacTimerThreshold>
 					<!-- Periodic timer to evaluate CQE parameters including RSSI and MAC stats -->
 					<!-- Setting CQETimer to zero disables the CQE -->
-					<CQETimer units="secs">2</CQETimer>
+					<CQETimer units="secs">10</CQETimer>
 					<!-- Time for which CQE is not reevaluted after it was declared bad due to MAC stats -->
 					<MACHysteresisTimer units="secs">120</MACHysteresisTimer>
 					<!-- Alpha to compute RSSI averaging based on IIR filtering mechanism -->
@@ -148,7 +148,7 @@
 					<RSSIMacTimerThreshold units="dbm">-85</RSSIMacTimerThreshold>
 					<!-- Periodic timer to evaluate CQE parameters including RSSI and MAC stats -->
 					<!-- Setting CQETimer to zero disables the CQE -->
-					<CQETimer units="secs">2</CQETimer>
+					<CQETimer units="secs">10</CQETimer>
 					<!-- Time for which CQE is not reevaluted after it was declared bad due to MAC stats -->
 					<MACHysteresisTimer units="secs">120</MACHysteresisTimer>
 					<!-- Alpha to compute RSSI averaging based on IIR filtering mechanism -->
@@ -202,7 +202,7 @@
 					<RSSIMacTimerThreshold units="dbm">-85</RSSIMacTimerThreshold>
 					<!-- Periodic timer to evaluate CQE parameters including RSSI and MAC stats -->
 					<!-- Setting CQETimer to zero disables the CQE -->
-					<CQETimer units="secs">2</CQETimer>
+					<CQETimer units="secs">10</CQETimer>
 					<!-- Time for which CQE is not reevaluted after it was declared bad due to MAC stats -->
 					<MACHysteresisTimer units="secs">120</MACHysteresisTimer>
 					<!-- Alpha to compute RSSI averaging based on IIR filtering mechanism -->
@@ -256,7 +256,7 @@
 					<RSSIMacTimerThreshold units="dbm">-85</RSSIMacTimerThreshold>
 					<!-- Periodic timer to evaluate CQE parameters including RSSI and MAC stats -->
 					<!-- Setting CQETimer to zero disables the CQE -->
-					<CQETimer units="secs">2</CQETimer>
+					<CQETimer units="secs">10</CQETimer>
 					<!-- Time for which CQE is not reevaluted after it was declared bad due to MAC stats -->
 					<MACHysteresisTimer units="secs">120</MACHysteresisTimer>
 					<!-- Alpha to compute RSSI averaging based on IIR filtering mechanism -->
@@ -312,7 +312,7 @@
 					<RSSIMacTimerThreshold units="dbm">-91</RSSIMacTimerThreshold>
 					<!-- Periodic timer to evaluate CQE parameters including RSSI and MAC stats -->
 					<!-- Setting CQETimer to zero disables the CQE -->
-					<CQETimer units="secs">2</CQETimer>
+					<CQETimer units="secs">10</CQETimer>
 					<!-- Time for which CQE is not reevaluted after it was declared bad due to MAC stats -->
 					<MACHysteresisTimer units="secs">120</MACHysteresisTimer>
 					<!-- Alpha to compute RSSI averaging based on IIR filtering mechanism -->
