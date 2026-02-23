@@ -147,37 +147,37 @@ if [ -d /proc/sys/walt ]; then
 	echo 0 > /proc/sys/walt/sched_boost
 
 	# configure input boost settings
-	echo 364800 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
-	echo 8 > /proc/sys/walt/input_boost/input_boost_ms
+	echo 1024000 0 0 0 0 0 0 0 > /proc/sys/walt/input_boost/input_boost_freq
+	echo 50 > /proc/sys/walt/input_boost/input_boost_ms
 
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy2/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy5/scaling_governor
 	echo "walt" > /sys/devices/system/cpu/cpufreq/policy7/scaling_governor
 
-	echo 70000 > /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us
-	echo 20000 > /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us
+	echo 60000 > /sys/devices/system/cpu/cpufreq/policy0/walt/down_rate_limit_us
+	echo 12000 > /sys/devices/system/cpu/cpufreq/policy0/walt/up_rate_limit_us
 	echo 80000 > /sys/devices/system/cpu/cpufreq/policy2/walt/down_rate_limit_us
-	echo 24000 > /sys/devices/system/cpu/cpufreq/policy2/walt/up_rate_limit_us
+	echo 15000 > /sys/devices/system/cpu/cpufreq/policy2/walt/up_rate_limit_us
 	echo 80000 > /sys/devices/system/cpu/cpufreq/policy5/walt/down_rate_limit_us
-	echo 24000 > /sys/devices/system/cpu/cpufreq/policy5/walt/up_rate_limit_us
+	echo 15000 > /sys/devices/system/cpu/cpufreq/policy5/walt/up_rate_limit_us
 	echo 100000 > /sys/devices/system/cpu/cpufreq/policy7/walt/down_rate_limit_us
-	echo 30000 > /sys/devices/system/cpu/cpufreq/policy7/walt/up_rate_limit_us
+	echo 20000 > /sys/devices/system/cpu/cpufreq/policy7/walt/up_rate_limit_us
 
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy0/walt/pl
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy2/walt/pl
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy5/walt/pl
 	echo 1 > /sys/devices/system/cpu/cpufreq/policy7/walt/pl
 
-	echo 364800 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
-	echo 499200 > /sys/devices/system/cpu/cpufreq/policy2/walt/rtg_boost_freq
-	echo 499200 > /sys/devices/system/cpu/cpufreq/policy5/walt/rtg_boost_freq
-	echo 480000 > /sys/devices/system/cpu/cpufreq/policy7/walt/rtg_boost_freq
+	echo 844800 > /sys/devices/system/cpu/cpufreq/policy0/walt/rtg_boost_freq
+	echo 902400 > /sys/devices/system/cpu/cpufreq/policy2/walt/rtg_boost_freq
+	echo 902400 > /sys/devices/system/cpu/cpufreq/policy5/walt/rtg_boost_freq
+	echo 979200 > /sys/devices/system/cpu/cpufreq/policy7/walt/rtg_boost_freq
 
-	echo 556800 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
-	echo 614400 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
-	echo 614400 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
-	echo 614400 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
+	echo 1152000 > /sys/devices/system/cpu/cpufreq/policy0/walt/hispeed_freq
+	echo 1248000 > /sys/devices/system/cpu/cpufreq/policy2/walt/hispeed_freq
+	echo 1248000 > /sys/devices/system/cpu/cpufreq/policy5/walt/hispeed_freq
+	echo 1363200 > /sys/devices/system/cpu/cpufreq/policy7/walt/hispeed_freq
 else
 	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy0/scaling_governor
 	echo "schedutil" > /sys/devices/system/cpu/cpufreq/policy2/scaling_governor
@@ -187,16 +187,16 @@ else
 fi
 
 if [ $rev == "1.0" ] || [ $rev == "1.1" ]; then
-	echo 364800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-	echo 499200 > /sys/devices/system/cpu/cpufreq/policy2/scaling_min_freq
-	echo 499200 > /sys/devices/system/cpu/cpufreq/policy5/scaling_min_freq
-	echo 480000 > /sys/devices/system/cpu/cpufreq/policy7/scaling_min_freq
-else
-	echo 364800 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
-	echo 499200 > /sys/devices/system/cpu/cpufreq/policy2/scaling_min_freq
-	echo 499200 > /sys/devices/system/cpu/cpufreq/policy5/scaling_min_freq
-	echo 480000 > /sys/devices/system/cpu/cpufreq/policy7/scaling_min_freq
-fi
+	echo 499200 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+	echo 576000 > /sys/devices/system/cpu/cpufreq/policy2/scaling_min_freq
+	echo 576000 > /sys/devices/system/cpu/cpufreq/policy5/scaling_min_freq
+	echo 614400 > /sys/devices/system/cpu/cpufreq/policy7/scaling_min_freq
+	else
+		echo 499200 > /sys/devices/system/cpu/cpufreq/policy0/scaling_min_freq
+		echo 614400 > /sys/devices/system/cpu/cpufreq/policy2/scaling_min_freq
+		echo 576000 > /sys/devices/system/cpu/cpufreq/policy5/scaling_min_freq
+		echo 672000 > /sys/devices/system/cpu/cpufreq/policy7/scaling_min_freq
+	fi
 
 # Reset the RT boost, which is 1024 (max) by default.
 echo 0 > /proc/sys/kernel/sched_util_clamp_min_rt_default
@@ -217,54 +217,54 @@ done
 for ubwcpbw in $bus_dcvs/UBWCP/*bwmon-ubwcp
 do
 	echo "5931 7980 10437 16113" > $ubwcpbw/mbps_zones
-	echo 4 > $ubwcpbw/sample_ms
+	echo 6 > $ubwcpbw/sample_ms
 	echo 80 > $ubwcpbw/io_percent
 	echo 20 > $ubwcpbw/hist_memory
 	echo 5 > $ubwcpbw/hyst_length
 	echo 1 > $ubwcpbw/idle_length
-	echo 30 > $ubwcpbw/down_thres
+	echo 35 > $ubwcpbw/down_thres
 	echo 0 > $ubwcpbw/guard_band_mbps
 	echo 250 > $ubwcpbw/up_scale
-	echo 1600 > $ubwcpbw/idle_mbps
-	echo 480000 > $ubwcpbw/max_freq
-	echo 40 > $ubwcpbw/window_ms
+	echo 1200 > $ubwcpbw/idle_mbps
+	echo 420000 > $ubwcpbw/max_freq
+	echo 60 > $ubwcpbw/window_ms
 done
 
 for llccbw in $bus_dcvs/LLCC/*bwmon-llcc
 do
 	echo "4577 7110 9155 12298 14236 16265" > $llccbw/mbps_zones
-	echo 4 > $llccbw/sample_ms
+	echo 6 > $llccbw/sample_ms
 	echo 80 > $llccbw/io_percent
 	echo 20 > $llccbw/hist_memory
 	echo 5 > $llccbw/hyst_length
 	echo 1 > $llccbw/idle_length
-	echo 30 > $llccbw/down_thres
+	echo 35 > $llccbw/down_thres
 	echo 0 > $llccbw/guard_band_mbps
 	echo 250 > $llccbw/up_scale
-	echo 1600 > $llccbw/idle_mbps
-	echo 520000 > $llccbw/max_freq
-	echo 40 > $llccbw/window_ms
+	echo 1200 > $llccbw/idle_mbps
+	echo 460000 > $llccbw/max_freq
+	echo 60 > $llccbw/window_ms
 done
 
 for ddrbw in $bus_dcvs/DDR/*bwmon-ddr
 do
 	echo "2086 5931 7980 10437 12157 14060 16113" > $ddrbw/mbps_zones
-	echo 4 > $ddrbw/sample_ms
+	echo 6 > $ddrbw/sample_ms
 	echo 80 > $ddrbw/io_percent
 	echo 20 > $ddrbw/hist_memory
 	echo 5 > $ddrbw/hyst_length
 	echo 1 > $ddrbw/idle_length
-	echo 30 > $ddrbw/down_thres
+	echo 35 > $ddrbw/down_thres
 	echo 0 > $ddrbw/guard_band_mbps
 	echo 250 > $ddrbw/up_scale
-	echo 1600 > $ddrbw/idle_mbps
-	echo 1600000 > $ddrbw/max_freq
-	echo 40 > $ddrbw/window_ms
+	echo 1200 > $ddrbw/idle_mbps
+	echo 1400000 > $ddrbw/max_freq
+	echo 60 > $ddrbw/window_ms
 done
 
 for latfloor in $bus_dcvs/*/*latfloor
 do
-	echo 18000 > $latfloor/ipm_ceil
+	echo 15000 > $latfloor/ipm_ceil
 done
 
 for l3gold in $bus_dcvs/L3/*gold
@@ -274,7 +274,7 @@ done
 
 for l3prime in $bus_dcvs/L3/*prime
 do
-	echo 12000 > $l3prime/ipm_ceil
+	echo 10000 > $l3prime/ipm_ceil
 done
 
 for qosgold in $bus_dcvs/DDRQOS/*gold
@@ -284,13 +284,13 @@ done
 
 for qosprime in $bus_dcvs/DDRQOS/*prime
 do
-	echo 70 > $qosprime/ipm_ceil
+	echo 60 > $qosprime/ipm_ceil
 done
 
 for ddrprime in $bus_dcvs/DDR/*prime
 do
 	echo 20 > $ddrprime/freq_scale_pct
-	echo 1200 > $ddrprime/freq_scale_floor_mhz
+	echo 1000 > $ddrprime/freq_scale_floor_mhz
 	echo 2000 > $ddrprime/freq_scale_ceil_mhz
 done
 
